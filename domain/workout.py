@@ -24,4 +24,4 @@ class Workout:
     type: RunTypes
     distance: float
     intensity: Intensity
-    scheduled_date: datetime = field(default_factory=datetime.now())
+    scheduled_date: datetime = field(default_factory=datetime.now)
