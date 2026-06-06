@@ -11,4 +11,15 @@ BEGINNER_MICROCYCLE = {
     6: RunTypes.EASY,  # Sunday: Recovery Run (Easy)
 }
 
+BEGINNER_VOLUME_DISTRIBUTION = {
+    0: 0.00,
+    1: 0.15,
+    2: 0.20,
+    3: 0.15,
+    4: 0.00,
+    5: 0.40,
+    6: 0.10,
+}
+
+
 # TODO: Implement advanced microcylce templates in future
