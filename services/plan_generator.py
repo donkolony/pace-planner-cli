@@ -1,6 +1,10 @@
-from domain.workout import Workout, RunTypes, Intensity
+from domain.workout import Workout, Intensity
 from domain.training_plan import TrainingPlan
-from domain.templates import BEGINNER_MICROCYCLE
+from domain.templates import (
+    BEGINNER_MICROCYCLE,
+    BEGINNER_VOLUME_DISTRIBUTION,
+    INTENSITY_MAPPING,
+)
 
 from datetime import datetime, timedelta
 
@@ -16,25 +20,34 @@ def generate_training_plan(
     total_days = (race_date - today).days
     total_weeks = total_days // 7
 
-    # 2. Empty list to hold the generated works
+    # 2. Empty list to hold the generated workouts
     generated_workouts = []
+
+    current_week_mileage = starting_mileage
 
     # 3. Loop
     for week in range(total_weeks):
+
         for day in BEGINNER_MICROCYCLE:
             days_passed = (week * 7) + day
             scheduled_date = today + timedelta(days=days_passed)
 
             run_type = BEGINNER_MICROCYCLE[day]
+            daily_weight = BEGINNER_VOLUME_DISTRIBUTION[day]
+            daily_intensity = INTENSITY_MAPPING[run_type]
 
-            new_workout = Workout(
+            daily_distance = round(current_week_mileage * daily_weight, 2)
+
+            create_workout = Workout(
                 type=run_type,
-                distance=5.0,  # TODO make dynamic
-                intensity=Intensity.ZONE_2,  # TODO make dynamic
+                distance=daily_distance,
+                intensity=daily_intensity,
                 scheduled_date=scheduled_date,
             )
 
-            generated_workouts.append(new_workout)
+            generated_workouts.append(create_workout)
+
+        current_week_mileage = current_week_mileage * 1.10
 
     # Create a training plan
     plan = TrainingPlan(

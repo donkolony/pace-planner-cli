@@ -1,4 +1,4 @@
-from domain.workout import RunTypes
+from domain.workout import RunTypes, Intensity
 
 # 0 = Monday, 6 = Sunday
 BEGINNER_MICROCYCLE = {
@@ -21,5 +21,12 @@ BEGINNER_VOLUME_DISTRIBUTION = {
     6: 0.10,
 }
 
+INTENSITY_MAPPING = {
+    RunTypes.REST: Intensity.ZONE_1,
+    RunTypes.EASY: Intensity.ZONE_2,
+    RunTypes.TEMPO: Intensity.ZONE_4,
+    RunTypes.LONG_RUN: Intensity.ZONE_2,
+    RunTypes.INTERVAL: Intensity.ZONE_5,
+}
 
 # TODO: Implement advanced microcylce templates in future
