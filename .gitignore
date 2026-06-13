@@ -224,3 +224,6 @@ _planning.md
 # TEMP
 _main.py
 _docs/
+
+# Local Storage/Database
+paceplanner_data.json
