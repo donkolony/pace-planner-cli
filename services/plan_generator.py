@@ -15,17 +15,17 @@ def generate_training_plan(
     starting_mileage: float,
 ) -> TrainingPlan:
 
-    # 1. Logic
+    # Logic
     today = datetime.now()
     total_days = (race_date - today).days
     total_weeks = total_days // 7
 
-    # 2. Empty list to hold the generated workouts
+    # List to hold the generated workouts
     generated_workouts = []
 
     current_week_mileage = starting_mileage
 
-    # 3. Loop
+    # Loop & Build the Workout
     for week in range(total_weeks):
 
         for day in BEGINNER_MICROCYCLE:
@@ -49,12 +49,12 @@ def generate_training_plan(
 
         current_week_mileage = current_week_mileage * 1.10
 
-    # Create a training plan
+    # Create a Training Plan
     plan = TrainingPlan(
         race_date=race_date,
         goal_time=goal_time,
         starting_mileage=starting_mileage,
-        workouts=[generated_workouts],
+        workouts=generated_workouts,
     )
 
     return plan
