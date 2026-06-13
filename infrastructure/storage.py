@@ -1,6 +1,8 @@
 from domain.training_plan import TrainingPlan
 from datetime import timedelta
 
+import json
+
 
 def serialize_training_plan(plan: TrainingPlan) -> dict:
 
@@ -28,3 +30,13 @@ def serialize_training_plan(plan: TrainingPlan) -> dict:
     }
 
     return master_plan_dict
+
+
+def save_plan_to_local_storage(
+    plan: TrainingPlan, file_path: str = "paceplanner_data.json"
+):
+
+    master_plan = serialize_training_plan(plan)
+
+    with open(file_path, "w") as f:
+        json.dump(master_plan, f, indent=4)
