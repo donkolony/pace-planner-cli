@@ -1,4 +1,3 @@
-import pytest
 from datetime import datetime, timedelta
 from domain.training_plan import TrainingPlan
 from domain.workout import Workout, RunTypes, Intensity

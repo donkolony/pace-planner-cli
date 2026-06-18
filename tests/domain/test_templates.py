@@ -1,4 +1,3 @@
-import pytest
 from domain.workout import RunTypes
 from domain.templates import BEGINNER_MICROCYCLE
 
