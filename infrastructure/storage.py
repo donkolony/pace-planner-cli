@@ -1,5 +1,4 @@
 from domain.training_plan import TrainingPlan
-from datetime import timedelta
 
 import json
 

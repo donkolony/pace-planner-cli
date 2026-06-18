@@ -1,4 +1,4 @@
-from domain.workout import Workout, Intensity
+from domain.workout import Workout
 from domain.training_plan import TrainingPlan
 from domain.templates import (
     BEGINNER_MICROCYCLE,
