@@ -3,7 +3,11 @@ from typing import Annotated
 
 import typer
 
-from infrastructure.storage import load_plan_from_local_storage
+from domain.workout import RunTypes
+from infrastructure.storage import (
+    load_plan_from_local_storage,
+    save_plan_to_local_storage,
+)
 from services.plan_generator import generate_training_plan
 
 app = typer.Typer()
@@ -25,7 +29,7 @@ def init(
         current_weekly_mileage,
     )
 
-    # save_plan_to_local_storage(plan)
+    save_plan_to_local_storage(plan)
 
     print("Plan created successfully :)")
 
@@ -33,15 +37,15 @@ def init(
 @app.command()
 def today():
 
-    today = datetime.now()
+    today = datetime.now().date()
 
     reconstructed_plan = load_plan_from_local_storage()
 
     # Loop through workuts and find matching date
     for workout in reconstructed_plan.workouts:
-        if today.date() == workout.scheduled_date.date():
+        if today == workout.scheduled_date.date():
             print(
-                f"🏃 Today's Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
+                f"{workout.scheduled_date.date().strftime('%A, %b, %d')} Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
             )
             return
 
@@ -64,6 +68,21 @@ def week():
             print(
                 f"{workout.scheduled_date.date().strftime('%A, %b, %d')}: Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
             )
+
+
+@app.command()
+def next_long_run():
+
+    today = datetime.now().date()
+
+    reconstructed_plan = load_plan_from_local_storage()
+
+    for workout in reconstructed_plan.workouts:
+        if workout.scheduled_date.date() >= today and workout.type == RunTypes.LONG_RUN:
+            print(
+                f"{workout.scheduled_date.date().strftime('%A, %b, %d')}: Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
+            )
+            return
 
 
 if __name__ == "__main__":
