@@ -33,19 +33,37 @@ def init(
 @app.command()
 def today():
 
-    now = datetime.now()
+    today = datetime.now()
 
     reconstructed_plan = load_plan_from_local_storage()
 
     # Loop through workuts and find matching date
     for workout in reconstructed_plan.workouts:
-        if now.date() == workout.scheduled_date.date():
+        if today.date() == workout.scheduled_date.date():
             print(
                 f"🏃 Today's Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
             )
             return
 
     print("Rest day...rest Bafo!")
+
+
+@app.command()
+def week():
+
+    # Get current date and format it
+    today = datetime.now().date()
+    end_of_week = today + timedelta(days=7)
+
+    reconstructed_plan = load_plan_from_local_storage()
+
+    print("\n📅 Your Schedule for the next 7 Days:")
+
+    for workout in reconstructed_plan.workouts:
+        if today <= workout.scheduled_date.date() <= end_of_week:
+            print(
+                f"{workout.scheduled_date.date().strftime('%A, %b, %d')}: Workout: {workout.distance}km ({workout.type.value} - {workout.intensity.name})"
+            )
 
 
 if __name__ == "__main__":
