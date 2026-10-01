@@ -38,7 +38,7 @@ def save_plan_to_local_storage(
 
     master_plan = serialize_training_plan(plan)
 
-    with open(file_path, "w") as f:
+    with open(file_path, "w") as f:  
         json.dump(master_plan, f, indent=4)
 
 
